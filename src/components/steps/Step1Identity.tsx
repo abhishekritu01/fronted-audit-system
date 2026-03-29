@@ -25,8 +25,17 @@ export default function Step1Identity({ defaultValues, onSuccess }: Props) {
   });
 
   const onSubmit = async (data: UserIdentification) => {
+    
+
+    // check all fields are filled
+    if (!data.firstName || !data.lastName || !data.email) {
+      setServerError("Please fill in all required fields.");
+      return;
+    }
+
     setServerError(null);
     try {
+      
       await authApi.sendOtp(data);
       onSuccess(data);
     } catch (err) {
